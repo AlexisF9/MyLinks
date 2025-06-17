@@ -1,14 +1,51 @@
-import { LayoutPage } from "@/components/layout";
-import { ModeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { LinkCard } from "@/components/link-card";
 
-export default function Page() {
+export interface LinkType {
+  id: string;
+  name?: string;
+  note?: string;
+  url: string;
+}
+
+export default async function Page() {
+  //server component
+
+  //query la db côté server
+  const links = await prisma.link.findMany();
+
+  const setNewName = async (id: string, name: string, note: string) => {
+    "use server";
+
+    await prisma.link.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        note,
+      },
+    });
+
+    revalidatePath("/dashboard");
+  };
+
   return (
     <div className="p-6">
       <SidebarTrigger />
-      <p>lorem</p>
+      <div className="grid gap-4 lg:grid-cols-3">
+        {links.map((link, index) => {
+          return (
+            <LinkCard
+              key={index}
+              link={link as LinkType}
+              setNewName={setNewName}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

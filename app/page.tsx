@@ -2,7 +2,7 @@ import { ModeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <header className="w-full border-b p-4">

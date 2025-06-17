@@ -49,7 +49,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Button>
         </SidebarFooter>
       </Sidebar>
-      <main>{children}</main>
+      <main className="w-full">{children}</main>
     </SidebarProvider>
   );
 }
