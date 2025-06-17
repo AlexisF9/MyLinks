@@ -22,7 +22,7 @@ export function LinkCard(props: {
       <CardHeader className="flex items-center gap-2 flex-wrap">
         <img
           width={30}
-          src={`${new URL(props.link.url).origin}./favicon.ico`}
+          src={`${new URL(props.link.url).origin}/favicon.ico`}
           alt=""
         />
         <div className="flex items-center gap-2 flex-wrap">

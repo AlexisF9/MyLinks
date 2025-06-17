@@ -2,6 +2,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { LinkCard } from "@/components/link-card";
+import { Suspense } from "react";
 
 export interface LinkType {
   id: string;
@@ -16,6 +17,7 @@ export default async function Page() {
   //query la db côté server
   const links = await prisma.link.findMany();
 
+  //server
   const setNewName = async (id: string, name: string, note: string) => {
     "use server";
 
@@ -35,17 +37,21 @@ export default async function Page() {
   return (
     <div className="p-6">
       <SidebarTrigger />
-      <div className="grid gap-4 lg:grid-cols-3">
-        {links.map((link, index) => {
-          return (
-            <LinkCard
-              key={index}
-              link={link as LinkType}
-              setNewName={setNewName}
-            />
-          );
-        })}
-      </div>
+      <Suspense>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {links &&
+            links.length > 0 &&
+            links.map((link, index) => {
+              return (
+                <LinkCard
+                  key={index}
+                  link={link as LinkType}
+                  setNewName={setNewName}
+                />
+              );
+            })}
+        </div>
+      </Suspense>
     </div>
   );
 }
