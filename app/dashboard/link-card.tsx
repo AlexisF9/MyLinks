@@ -1,21 +1,19 @@
 "use client";
-import { FormName } from "@/app/dashboard/form-name";
+import { EditLinkForm } from "@/app/dashboard/edit-link-form";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Link, Pencil } from "lucide-react";
+import { Link, Pencil, Trash2 } from "lucide-react";
 import { LinkType } from "@/app/dashboard/page";
+import { deleteLink } from "./link.action";
 
-export function LinkCard(props: {
-  link: LinkType;
-  setNewName: (id: string, name: string, note: string) => void;
-}) {
+export function LinkCard(props: { link: LinkType }) {
   const [edit, setEdit] = useState(false);
   return (
     <Card className="h-fit">
@@ -47,13 +45,7 @@ export function LinkCard(props: {
       <CardContent>
         {edit ? (
           <>
-            <FormName
-              //le func .bind() prérempli avec l'id, il reste name et note à mettre depuis le compo
-              setNewName={props.setNewName.bind(null, props.link.id)}
-              name={props.link.name ?? undefined}
-              note={props.link.note ?? undefined}
-              setEdit={setEdit}
-            />
+            <EditLinkForm link={props.link} setEdit={setEdit} />
           </>
         ) : (
           <div className="flex flex-col gap-4">
@@ -66,11 +58,18 @@ export function LinkCard(props: {
         )}
       </CardContent>
       {!edit && (
-        <CardFooter>
+        <CardFooter className="flex items-center justify-between gap-2 flex-wrap">
           <Button className="w-fit">
             <a href={props.link.url} target="_blank">
               Open
             </a>
+          </Button>
+          <Button
+            variant="secondary"
+            size="icon"
+            onClick={() => deleteLink(props.link.id)}
+          >
+            <Trash2 width={20} />
           </Button>
         </CardFooter>
       )}

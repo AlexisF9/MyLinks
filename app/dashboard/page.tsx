@@ -1,9 +1,9 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { LinkCard } from "@/components/link-card";
-import { Suspense } from "react";
-import { LinksGrid } from "@/components/links-grid";
+import { NewLink } from "./new-link";
+import { LinksGrid } from "./links-grid";
 
 export interface LinkType {
   id: string;
@@ -13,9 +13,28 @@ export interface LinkType {
 }
 
 export default async function Page() {
+  // server function
+  const setNewLink = async (name: string, url: string, note: string) => {
+    "use server";
+
+    await prisma.link.create({
+      data: {
+        name,
+        url,
+        note,
+      },
+    });
+
+    revalidatePath("/dashboard");
+  };
+
   return (
     <div className="p-6">
-      <SidebarTrigger />
+      <div className="flex items-center gap-4 mb-6">
+        <SidebarTrigger />
+        <NewLink setNewLink={setNewLink} />
+      </div>
+
       <Suspense>
         <LinksGrid />
       </Suspense>

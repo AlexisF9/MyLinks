@@ -4,36 +4,45 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dispatch, SetStateAction } from "react";
+import { editLink } from "./link.action";
 
-export const FormName = (props: {
-  name?: string;
-  note?: string;
-  setNewName: (name: string, note: string) => void;
+export const EditLinkForm = (props: {
+  link: { id: string; name?: string; note?: string };
   setEdit: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const submiutForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
     const note = formData.get("note");
 
-    props.setNewName(name as string, note as string);
+    editLink(props.link.id, name as string, note as string);
     props.setEdit(false);
   };
 
   return (
-    <form onSubmit={(e) => submiutForm(e)} className="flex flex-col gap-4">
+    <form onSubmit={(e) => submitForm(e)} className="flex flex-col gap-4">
       <div>
         <Label htmlFor="name" className="mb-2">
           Name
         </Label>
-        <Input id="name" name="name" type="text" defaultValue={props.name} />
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          defaultValue={props.link.name}
+        />
       </div>
       <div>
         <Label htmlFor="note" className="mb-2">
           Note
         </Label>
-        <Input id="note" name="note" type="text" defaultValue={props.note} />
+        <Input
+          id="note"
+          name="note"
+          type="text"
+          defaultValue={props.link.note}
+        />
       </div>
       <div className="flex items-center gap-2">
         <Button type="submit">Edit</Button>
