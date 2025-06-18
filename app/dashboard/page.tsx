@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { LinkCard } from "@/components/link-card";
 import { Suspense } from "react";
+import { LinksGrid } from "@/components/links-grid";
 
 export interface LinkType {
   id: string;
@@ -12,45 +13,11 @@ export interface LinkType {
 }
 
 export default async function Page() {
-  //server component
-
-  //query la db côté server
-  const links = await prisma.link.findMany();
-
-  //server
-  const setNewName = async (id: string, name: string, note: string) => {
-    "use server";
-
-    await prisma.link.update({
-      where: {
-        id,
-      },
-      data: {
-        name,
-        note,
-      },
-    });
-
-    revalidatePath("/dashboard");
-  };
-
   return (
     <div className="p-6">
       <SidebarTrigger />
       <Suspense>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {links &&
-            links.length > 0 &&
-            links.map((link, index) => {
-              return (
-                <LinkCard
-                  key={index}
-                  link={link as LinkType}
-                  setNewName={setNewName}
-                />
-              );
-            })}
-        </div>
+        <LinksGrid />
       </Suspense>
     </div>
   );

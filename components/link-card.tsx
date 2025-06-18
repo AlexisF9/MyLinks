@@ -18,7 +18,7 @@ export function LinkCard(props: {
 }) {
   const [edit, setEdit] = useState(false);
   return (
-    <Card>
+    <Card className="h-fit">
       <CardHeader className="flex items-center gap-2 flex-wrap">
         <img
           width={30}
@@ -66,7 +66,7 @@ export function LinkCard(props: {
         )}
       </CardContent>
       {!edit && (
-        <CardFooter className="mt-auto">
+        <CardFooter>
           <Button className="w-fit">
             <a href={props.link.url} target="_blank">
               Open
