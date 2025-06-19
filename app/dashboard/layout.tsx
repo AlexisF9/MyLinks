@@ -13,9 +13,21 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { getUser } from "@/lib/auth-server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/auth/signin");
+  }
+
   return (
     <SidebarProvider>
       <Sidebar>
