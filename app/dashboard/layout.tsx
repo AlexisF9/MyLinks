@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { ModeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { getUser } from "@/lib/auth-server";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -56,9 +58,22 @@ export default async function Layout({
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="p-6">
-          <Button variant={"outline"} className="w-fit">
-            <Link href={"/"}>Logout</Link>
-          </Button>
+          <form>
+            <Button
+              variant={"outline"}
+              formAction={async () => {
+                "use server";
+
+                await auth.api.signOut({
+                  headers: await headers(),
+                });
+
+                redirect("/");
+              }}
+            >
+              Logout
+            </Button>
+          </form>
         </SidebarFooter>
       </Sidebar>
       <main className="w-full">{children}</main>

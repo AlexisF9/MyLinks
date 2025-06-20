@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -25,6 +27,7 @@ const formSchema = z.object({
 
 export function SignInForm() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,6 +45,9 @@ export function SignInForm() {
         callbackURL: "/dashboard",
       },
       {
+        onRequest: () => {
+          setLoading(true);
+        },
         onSuccess: () => {
           toast("You are successfully logged in");
           router.push("/dashboard");
@@ -84,7 +90,15 @@ export function SignInForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Submit"}
+        </Button>
+        <p>
+          Don't have an account ?{" "}
+          <Link href={"/auth/signup"} className="text-blue-600 hover:underline">
+            Sign up
+          </Link>
+        </p>
       </form>
     </Form>
   );

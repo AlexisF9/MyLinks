@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string(),
@@ -26,6 +28,7 @@ const formSchema = z.object({
 
 export function SignUpForm() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,6 +48,9 @@ export function SignUpForm() {
         callbackURL: "/dashboard",
       },
       {
+        onRequest: () => {
+          setLoading(true);
+        },
         onSuccess: () => {
           toast("User create with success");
           router.push("/dashboard");
@@ -100,7 +106,15 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={loading}>
+          {loading ? "Loading..." : "Submit"}
+        </Button>
+        <p>
+          You have an account ?{" "}
+          <Link href={"/auth/signin"} className="text-blue-600 hover:underline">
+            Sign in
+          </Link>
+        </p>
       </form>
     </Form>
   );
