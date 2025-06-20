@@ -38,7 +38,7 @@ export default async function Page() {
   };
 
   return (
-    <div className="p-6">
+    <div>
       <div className="flex items-center gap-4 mb-6">
         <SidebarTrigger />
         <NewLink setNewLink={setNewLink} />

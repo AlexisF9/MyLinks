@@ -1,6 +1,4 @@
-import { auth } from "@/auth";
 import { ModeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -14,8 +12,9 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { UserMenu } from "@/components/user-menu";
 import { getUser } from "@/lib/auth-server";
-import { headers } from "next/headers";
+import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -26,6 +25,8 @@ export default async function Layout({
 }) {
   const user = await getUser();
 
+  const categories = await prisma.category.findMany();
+
   if (!user) {
     redirect("/auth/signin");
   }
@@ -34,50 +35,34 @@ export default async function Layout({
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader className="p-6">
-          <h1 className="text-2xl">MyLinks</h1>
+          <h1 className="text-2xl">
+            <Link href={"/"}>MyLinks</Link>
+          </h1>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup className="p-4">
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupLabel>Default categories</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton>Link 1</SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton>Link 2</SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton>Link 3</SidebarMenuButton>
-                </SidebarMenuItem>
+                {categories &&
+                  categories.length > 0 &&
+                  categories.map((cat, index) => {
+                    return (
+                      <SidebarMenuItem key={index}>
+                        <SidebarMenuButton>{cat.name}</SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-          <SidebarGroup className="p-4">
-            <ModeToggle />
-          </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="p-6">
-          <p>Hi {user.name} !</p>
-          <form>
-            <Button
-              variant={"outline"}
-              formAction={async () => {
-                "use server";
-
-                await auth.api.signOut({
-                  headers: await headers(),
-                });
-
-                redirect("/");
-              }}
-            >
-              Logout
-            </Button>
-          </form>
+          <ModeToggle />
+          <UserMenu />
         </SidebarFooter>
       </Sidebar>
-      <main className="w-full">{children}</main>
+      <main className="w-full p-6">{children}</main>
     </SidebarProvider>
   );
 }

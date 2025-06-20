@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { getUser } from "@/lib/auth-server";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { UserMenu } from "./user-menu";
 
 export async function Header() {
   const user = await getUser();
@@ -18,24 +19,7 @@ export async function Header() {
         <div className="flex items-center gap-2">
           <nav className="flex gap-2">
             {user ? (
-              <div className="flex items-center gap-2">
-                <p>Hi {user.name} !</p>
-                <form>
-                  <Button
-                    formAction={async () => {
-                      "use server";
-
-                      await auth.api.signOut({
-                        headers: await headers(),
-                      });
-
-                      redirect("/");
-                    }}
-                  >
-                    Logout
-                  </Button>
-                </form>
-              </div>
+              <UserMenu />
             ) : (
               <>
                 <Button variant={"outline"}>

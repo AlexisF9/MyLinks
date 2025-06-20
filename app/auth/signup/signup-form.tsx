@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { Github } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string(),
@@ -39,6 +40,22 @@ export function SignUpForm() {
       password: "",
     },
   });
+
+  const signInWithProvider = async (provider: string) => {
+    await authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/dashboard",
+      },
+      {
+        onSuccess: () => {},
+        onError: (ctx) => {
+          toast("Something went wrong");
+          console.log("error", ctx);
+        },
+      }
+    );
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await authClient.signUp.email(
@@ -68,58 +85,70 @@ export function SignUpForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>password</FormLabel>
-              <FormControl>
-                <Input type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {error && <p className="text-destructive">{error}</p>}
-        <Button type="submit" disabled={loading}>
-          {loading ? "Loading..." : "Submit"}
+    <div className="flex flex-col items gap-6">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input type="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>password</FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {error && <p className="text-destructive">{error}</p>}
+          <Button className="w-full" type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
+          </Button>
+          <p>
+            You have an account ?{" "}
+            <Link
+              href={"/auth/signin"}
+              className="text-blue-600 hover:underline"
+            >
+              Sign in
+            </Link>
+          </p>
+        </form>
+        <p className="text-center">Or</p>
+        <Button
+          variant={"outline"}
+          onClick={() => signInWithProvider("github")}
+        >
+          <Github /> Sign in with GitHub
         </Button>
-        <p>
-          You have an account ?{" "}
-          <Link href={"/auth/signin"} className="text-blue-600 hover:underline">
-            Sign in
-          </Link>
-        </p>
-      </form>
-    </Form>
+      </Form>
+    </div>
   );
 }
