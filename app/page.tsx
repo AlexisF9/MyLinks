@@ -12,9 +12,6 @@ export default function Home() {
 
         <div className="flex gap-4 mt-6">
           <Button>
-            <Link href={"/links"}>Go to links list</Link>
-          </Button>
-          <Button>
             <Link href={"/dashboard"}>Dashboard</Link>
           </Button>
         </div>

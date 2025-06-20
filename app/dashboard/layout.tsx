@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { UserMenu } from "@/components/user-menu";
 import { getUser } from "@/lib/auth-server";
@@ -62,7 +63,10 @@ export default async function Layout({
           <UserMenu />
         </SidebarFooter>
       </Sidebar>
-      <main className="w-full p-6">{children}</main>
+      <main className="w-full p-6">
+        <SidebarTrigger className="mb-4" />
+        {children}
+      </main>
     </SidebarProvider>
   );
 }

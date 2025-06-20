@@ -6,6 +6,7 @@ import { NewLink } from "./new-link";
 import { LinksGrid } from "./links-grid";
 import { getUser } from "@/lib/auth-server";
 import { redirect } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
 
 export interface LinkType {
   id: string;
@@ -39,10 +40,12 @@ export default async function Page() {
 
   return (
     <div>
-      <div className="flex items-center gap-4 mb-6">
-        <SidebarTrigger />
+      <div className="flex items-center gap-4">
+        <h2 className="text-xl">Your links</h2>
         <NewLink setNewLink={setNewLink} />
       </div>
+
+      <Separator className="my-6" />
 
       <Suspense>
         <LinksGrid />
