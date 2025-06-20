@@ -22,6 +22,8 @@ model Link {
   createAt   DateTime  @default(now())
   categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -40,6 +42,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  links         Link[]
 
   @@unique([email])
   @@map("user")

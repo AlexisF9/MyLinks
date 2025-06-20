@@ -1,16 +1,17 @@
-import { LayoutPage } from "@/components/layout";
 import { SignUpForm } from "./signup-form";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function SignUpPage() {
   return (
-    <LayoutPage>
-      <h2 className="text-xl my-6">SignUp</h2>
-      <Card>
-        <CardContent>
-          <SignUpForm />
-        </CardContent>
-      </Card>
-    </LayoutPage>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <h2 className="text-xl">SignUp</h2>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <SignUpForm />
+      </CardContent>
+    </Card>
   );
 }

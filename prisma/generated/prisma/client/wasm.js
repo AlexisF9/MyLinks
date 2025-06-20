@@ -126,7 +126,8 @@ exports.Prisma.LinkScalarFieldEnum = {
   url: 'url',
   note: 'note',
   createAt: 'createAt',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  userId: 'userId'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {

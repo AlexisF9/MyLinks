@@ -6,9 +6,11 @@ export default function LayoutPage({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <main className="flex flex-col min-h-screen">
       <Header />
-      {children}
+      <div className="flex-grow flex flex-col justify-center max-w-2xl w-full mx-auto px-4">
+        {children}
+      </div>
     </main>
   );
 }

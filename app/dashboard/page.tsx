@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { NewLink } from "./new-link";
 import { LinksGrid } from "./links-grid";
+import { getUser } from "@/lib/auth-server";
+import { redirect } from "next/navigation";
 
 export interface LinkType {
   id: string;
@@ -13,6 +15,12 @@ export interface LinkType {
 }
 
 export default async function Page() {
+  const user = await getUser();
+
+  if (!user) {
+    redirect("/auth/signin");
+  }
+
   // server function
   const setNewLink = async (name: string, url: string, note: string) => {
     "use server";
@@ -22,6 +30,7 @@ export default async function Page() {
         name,
         url,
         note,
+        userId: user.id,
       },
     });
 

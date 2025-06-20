@@ -29,6 +29,7 @@ const formSchema = z.object({
 export function SignUpForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,13 +53,15 @@ export function SignUpForm() {
           setLoading(true);
         },
         onSuccess: () => {
-          toast("User create with success");
           router.push("/dashboard");
           router.refresh();
+          setLoading(false);
         },
         onError: (ctx) => {
           toast("Something went wrong");
+          setError(ctx.error.message);
           console.log("error", ctx);
+          setLoading(false);
         },
       }
     );
@@ -66,7 +69,7 @@ export function SignUpForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="name"
@@ -106,6 +109,7 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
+        {error && <p className="text-destructive">{error}</p>}
         <Button type="submit" disabled={loading}>
           {loading ? "Loading..." : "Submit"}
         </Button>

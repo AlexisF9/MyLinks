@@ -28,6 +28,7 @@ const formSchema = z.object({
 export function SignInForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,10 +53,13 @@ export function SignInForm() {
           toast("You are successfully logged in");
           router.push("/dashboard");
           router.refresh();
+          setLoading(false);
         },
         onError: (ctx) => {
           toast("Something went wrong");
           console.log("error", ctx);
+          setError(ctx.error.message);
+          setLoading(false);
         },
       }
     );
@@ -63,7 +67,7 @@ export function SignInForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="email"
@@ -90,6 +94,7 @@ export function SignInForm() {
             </FormItem>
           )}
         />
+        {error && <p className="text-destructive">{error}</p>}
         <Button type="submit" disabled={loading}>
           {loading ? "Loading..." : "Submit"}
         </Button>

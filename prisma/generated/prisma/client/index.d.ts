@@ -1357,11 +1357,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     sessions: number
     accounts: number
+    links: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+    links?: boolean | UserCountOutputTypeCountLinksArgs
   }
 
   // Custom InputTypes
@@ -1389,6 +1391,13 @@ export namespace Prisma {
     where?: AccountWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLinksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LinkWhereInput
+  }
+
 
   /**
    * Models
@@ -1411,6 +1420,7 @@ export namespace Prisma {
     note: string | null
     createAt: Date | null
     categoryId: string | null
+    userId: string | null
   }
 
   export type LinkMaxAggregateOutputType = {
@@ -1420,6 +1430,7 @@ export namespace Prisma {
     note: string | null
     createAt: Date | null
     categoryId: string | null
+    userId: string | null
   }
 
   export type LinkCountAggregateOutputType = {
@@ -1429,6 +1440,7 @@ export namespace Prisma {
     note: number
     createAt: number
     categoryId: number
+    userId: number
     _all: number
   }
 
@@ -1440,6 +1452,7 @@ export namespace Prisma {
     note?: true
     createAt?: true
     categoryId?: true
+    userId?: true
   }
 
   export type LinkMaxAggregateInputType = {
@@ -1449,6 +1462,7 @@ export namespace Prisma {
     note?: true
     createAt?: true
     categoryId?: true
+    userId?: true
   }
 
   export type LinkCountAggregateInputType = {
@@ -1458,6 +1472,7 @@ export namespace Prisma {
     note?: true
     createAt?: true
     categoryId?: true
+    userId?: true
     _all?: true
   }
 
@@ -1540,6 +1555,7 @@ export namespace Prisma {
     note: string | null
     createAt: Date
     categoryId: string | null
+    userId: string
     _count: LinkCountAggregateOutputType | null
     _min: LinkMinAggregateOutputType | null
     _max: LinkMaxAggregateOutputType | null
@@ -1566,7 +1582,9 @@ export namespace Prisma {
     note?: boolean
     createAt?: boolean
     categoryId?: boolean
+    userId?: boolean
     category?: boolean | Link$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["link"]>
 
   export type LinkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1576,7 +1594,9 @@ export namespace Prisma {
     note?: boolean
     createAt?: boolean
     categoryId?: boolean
+    userId?: boolean
     category?: boolean | Link$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["link"]>
 
   export type LinkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1586,7 +1606,9 @@ export namespace Prisma {
     note?: boolean
     createAt?: boolean
     categoryId?: boolean
+    userId?: boolean
     category?: boolean | Link$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["link"]>
 
   export type LinkSelectScalar = {
@@ -1596,23 +1618,28 @@ export namespace Prisma {
     note?: boolean
     createAt?: boolean
     categoryId?: boolean
+    userId?: boolean
   }
 
-  export type LinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "url" | "note" | "createAt" | "categoryId", ExtArgs["result"]["link"]>
+  export type LinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "url" | "note" | "createAt" | "categoryId" | "userId", ExtArgs["result"]["link"]>
   export type LinkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | Link$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type LinkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | Link$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type LinkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | Link$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $LinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Link"
     objects: {
       category: Prisma.$CategoryPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1621,6 +1648,7 @@ export namespace Prisma {
       note: string | null
       createAt: Date
       categoryId: string | null
+      userId: string
     }, ExtArgs["result"]["link"]>
     composites: {}
   }
@@ -2016,6 +2044,7 @@ export namespace Prisma {
   export interface Prisma__LinkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     category<T extends Link$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Link$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2051,6 +2080,7 @@ export namespace Prisma {
     readonly note: FieldRef<"Link", 'String'>
     readonly createAt: FieldRef<"Link", 'DateTime'>
     readonly categoryId: FieldRef<"Link", 'String'>
+    readonly userId: FieldRef<"Link", 'String'>
   }
     
 
@@ -3697,6 +3727,7 @@ export namespace Prisma {
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    links?: boolean | User$linksArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3734,6 +3765,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    links?: boolean | User$linksArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3744,6 +3776,7 @@ export namespace Prisma {
     objects: {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
+      links: Prisma.$LinkPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4149,6 +4182,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    links<T extends User$linksArgs<ExtArgs> = {}>(args?: Subset<T, User$linksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4618,6 +4652,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
+   * User.links
+   */
+  export type User$linksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Link
+     */
+    select?: LinkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Link
+     */
+    omit?: LinkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LinkInclude<ExtArgs> | null
+    where?: LinkWhereInput
+    orderBy?: LinkOrderByWithRelationInput | LinkOrderByWithRelationInput[]
+    cursor?: LinkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LinkScalarFieldEnum | LinkScalarFieldEnum[]
   }
 
   /**
@@ -7926,7 +7984,8 @@ export namespace Prisma {
     url: 'url',
     note: 'note',
     createAt: 'createAt',
-    categoryId: 'categoryId'
+    categoryId: 'categoryId',
+    userId: 'userId'
   };
 
   export type LinkScalarFieldEnum = (typeof LinkScalarFieldEnum)[keyof typeof LinkScalarFieldEnum]
@@ -8089,7 +8148,9 @@ export namespace Prisma {
     note?: StringNullableFilter<"Link"> | string | null
     createAt?: DateTimeFilter<"Link"> | Date | string
     categoryId?: StringNullableFilter<"Link"> | string | null
+    userId?: StringFilter<"Link"> | string
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type LinkOrderByWithRelationInput = {
@@ -8099,7 +8160,9 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     createAt?: SortOrder
     categoryId?: SortOrderInput | SortOrder
+    userId?: SortOrder
     category?: CategoryOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type LinkWhereUniqueInput = Prisma.AtLeast<{
@@ -8112,7 +8175,9 @@ export namespace Prisma {
     note?: StringNullableFilter<"Link"> | string | null
     createAt?: DateTimeFilter<"Link"> | Date | string
     categoryId?: StringNullableFilter<"Link"> | string | null
+    userId?: StringFilter<"Link"> | string
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type LinkOrderByWithAggregationInput = {
@@ -8122,6 +8187,7 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     createAt?: SortOrder
     categoryId?: SortOrderInput | SortOrder
+    userId?: SortOrder
     _count?: LinkCountOrderByAggregateInput
     _max?: LinkMaxOrderByAggregateInput
     _min?: LinkMinOrderByAggregateInput
@@ -8137,6 +8203,7 @@ export namespace Prisma {
     note?: StringNullableWithAggregatesFilter<"Link"> | string | null
     createAt?: DateTimeWithAggregatesFilter<"Link"> | Date | string
     categoryId?: StringNullableWithAggregatesFilter<"Link"> | string | null
+    userId?: StringWithAggregatesFilter<"Link"> | string
   }
 
   export type CategoryWhereInput = {
@@ -8192,6 +8259,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
+    links?: LinkListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8204,6 +8272,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
+    links?: LinkOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8219,6 +8288,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
+    links?: LinkListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8476,6 +8546,7 @@ export namespace Prisma {
     note?: string | null
     createAt?: Date | string
     category?: CategoryCreateNestedOneWithoutLinksInput
+    user: UserCreateNestedOneWithoutLinksInput
   }
 
   export type LinkUncheckedCreateInput = {
@@ -8485,6 +8556,7 @@ export namespace Prisma {
     note?: string | null
     createAt?: Date | string
     categoryId?: string | null
+    userId: string
   }
 
   export type LinkUpdateInput = {
@@ -8494,6 +8566,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneWithoutLinksNestedInput
+    user?: UserUpdateOneRequiredWithoutLinksNestedInput
   }
 
   export type LinkUncheckedUpdateInput = {
@@ -8503,6 +8576,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type LinkCreateManyInput = {
@@ -8512,6 +8586,7 @@ export namespace Prisma {
     note?: string | null
     createAt?: Date | string
     categoryId?: string | null
+    userId: string
   }
 
   export type LinkUpdateManyMutationInput = {
@@ -8529,6 +8604,7 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CategoryCreateInput = {
@@ -8580,6 +8656,7 @@ export namespace Prisma {
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    links?: LinkCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8592,6 +8669,7 @@ export namespace Prisma {
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    links?: LinkUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8604,6 +8682,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    links?: LinkUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8616,6 +8695,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    links?: LinkUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8944,6 +9024,11 @@ export namespace Prisma {
     isNot?: CategoryWhereInput | null
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -8956,6 +9041,7 @@ export namespace Prisma {
     note?: SortOrder
     createAt?: SortOrder
     categoryId?: SortOrder
+    userId?: SortOrder
   }
 
   export type LinkMaxOrderByAggregateInput = {
@@ -8965,6 +9051,7 @@ export namespace Prisma {
     note?: SortOrder
     createAt?: SortOrder
     categoryId?: SortOrder
+    userId?: SortOrder
   }
 
   export type LinkMinOrderByAggregateInput = {
@@ -8974,6 +9061,7 @@ export namespace Prisma {
     note?: SortOrder
     createAt?: SortOrder
     categoryId?: SortOrder
+    userId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9112,11 +9200,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type SessionCountOrderByAggregateInput = {
@@ -9258,6 +9341,12 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutLinksInput = {
+    create?: XOR<UserCreateWithoutLinksInput, UserUncheckedCreateWithoutLinksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLinksInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -9278,6 +9367,14 @@ export namespace Prisma {
     delete?: CategoryWhereInput | boolean
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutLinksInput, CategoryUpdateWithoutLinksInput>, CategoryUncheckedUpdateWithoutLinksInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutLinksNestedInput = {
+    create?: XOR<UserCreateWithoutLinksInput, UserUncheckedCreateWithoutLinksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLinksInput
+    upsert?: UserUpsertWithoutLinksInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLinksInput, UserUpdateWithoutLinksInput>, UserUncheckedUpdateWithoutLinksInput>
   }
 
   export type LinkCreateNestedManyWithoutCategoryInput = {
@@ -9336,6 +9433,13 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
+  export type LinkCreateNestedManyWithoutUserInput = {
+    create?: XOR<LinkCreateWithoutUserInput, LinkUncheckedCreateWithoutUserInput> | LinkCreateWithoutUserInput[] | LinkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LinkCreateOrConnectWithoutUserInput | LinkCreateOrConnectWithoutUserInput[]
+    createMany?: LinkCreateManyUserInputEnvelope
+    connect?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -9348,6 +9452,13 @@ export namespace Prisma {
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
     createMany?: AccountCreateManyUserInputEnvelope
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  }
+
+  export type LinkUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<LinkCreateWithoutUserInput, LinkUncheckedCreateWithoutUserInput> | LinkCreateWithoutUserInput[] | LinkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LinkCreateOrConnectWithoutUserInput | LinkCreateOrConnectWithoutUserInput[]
+    createMany?: LinkCreateManyUserInputEnvelope
+    connect?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -9382,6 +9493,20 @@ export namespace Prisma {
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
+  export type LinkUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LinkCreateWithoutUserInput, LinkUncheckedCreateWithoutUserInput> | LinkCreateWithoutUserInput[] | LinkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LinkCreateOrConnectWithoutUserInput | LinkCreateOrConnectWithoutUserInput[]
+    upsert?: LinkUpsertWithWhereUniqueWithoutUserInput | LinkUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LinkCreateManyUserInputEnvelope
+    set?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    disconnect?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    delete?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    connect?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    update?: LinkUpdateWithWhereUniqueWithoutUserInput | LinkUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LinkUpdateManyWithWhereWithoutUserInput | LinkUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LinkScalarWhereInput | LinkScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -9408,6 +9533,20 @@ export namespace Prisma {
     update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
+  }
+
+  export type LinkUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LinkCreateWithoutUserInput, LinkUncheckedCreateWithoutUserInput> | LinkCreateWithoutUserInput[] | LinkUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LinkCreateOrConnectWithoutUserInput | LinkCreateOrConnectWithoutUserInput[]
+    upsert?: LinkUpsertWithWhereUniqueWithoutUserInput | LinkUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LinkCreateManyUserInputEnvelope
+    set?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    disconnect?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    delete?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    connect?: LinkWhereUniqueInput | LinkWhereUniqueInput[]
+    update?: LinkUpdateWithWhereUniqueWithoutUserInput | LinkUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LinkUpdateManyWithWhereWithoutUserInput | LinkUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LinkScalarWhereInput | LinkScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -9604,6 +9743,35 @@ export namespace Prisma {
     create: XOR<CategoryCreateWithoutLinksInput, CategoryUncheckedCreateWithoutLinksInput>
   }
 
+  export type UserCreateWithoutLinksInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLinksInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLinksInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLinksInput, UserUncheckedCreateWithoutLinksInput>
+  }
+
   export type CategoryUpsertWithoutLinksInput = {
     update: XOR<CategoryUpdateWithoutLinksInput, CategoryUncheckedUpdateWithoutLinksInput>
     create: XOR<CategoryCreateWithoutLinksInput, CategoryUncheckedCreateWithoutLinksInput>
@@ -9625,12 +9793,48 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserUpsertWithoutLinksInput = {
+    update: XOR<UserUpdateWithoutLinksInput, UserUncheckedUpdateWithoutLinksInput>
+    create: XOR<UserCreateWithoutLinksInput, UserUncheckedCreateWithoutLinksInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLinksInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLinksInput, UserUncheckedUpdateWithoutLinksInput>
+  }
+
+  export type UserUpdateWithoutLinksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLinksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type LinkCreateWithoutCategoryInput = {
     id?: string
     name?: string | null
     url: string
     note?: string | null
     createAt?: Date | string
+    user: UserCreateNestedOneWithoutLinksInput
   }
 
   export type LinkUncheckedCreateWithoutCategoryInput = {
@@ -9639,6 +9843,7 @@ export namespace Prisma {
     url: string
     note?: string | null
     createAt?: Date | string
+    userId: string
   }
 
   export type LinkCreateOrConnectWithoutCategoryInput = {
@@ -9677,6 +9882,7 @@ export namespace Prisma {
     note?: StringNullableFilter<"Link"> | string | null
     createAt?: DateTimeFilter<"Link"> | Date | string
     categoryId?: StringNullableFilter<"Link"> | string | null
+    userId?: StringFilter<"Link"> | string
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -9749,6 +9955,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type LinkCreateWithoutUserInput = {
+    id?: string
+    name?: string | null
+    url: string
+    note?: string | null
+    createAt?: Date | string
+    category?: CategoryCreateNestedOneWithoutLinksInput
+  }
+
+  export type LinkUncheckedCreateWithoutUserInput = {
+    id?: string
+    name?: string | null
+    url: string
+    note?: string | null
+    createAt?: Date | string
+    categoryId?: string | null
+  }
+
+  export type LinkCreateOrConnectWithoutUserInput = {
+    where: LinkWhereUniqueInput
+    create: XOR<LinkCreateWithoutUserInput, LinkUncheckedCreateWithoutUserInput>
+  }
+
+  export type LinkCreateManyUserInputEnvelope = {
+    data: LinkCreateManyUserInput | LinkCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -9814,6 +10048,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Account"> | Date | string
   }
 
+  export type LinkUpsertWithWhereUniqueWithoutUserInput = {
+    where: LinkWhereUniqueInput
+    update: XOR<LinkUpdateWithoutUserInput, LinkUncheckedUpdateWithoutUserInput>
+    create: XOR<LinkCreateWithoutUserInput, LinkUncheckedCreateWithoutUserInput>
+  }
+
+  export type LinkUpdateWithWhereUniqueWithoutUserInput = {
+    where: LinkWhereUniqueInput
+    data: XOR<LinkUpdateWithoutUserInput, LinkUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LinkUpdateManyWithWhereWithoutUserInput = {
+    where: LinkScalarWhereInput
+    data: XOR<LinkUpdateManyMutationInput, LinkUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id: string
     name: string
@@ -9823,6 +10073,7 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
+    links?: LinkCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -9834,6 +10085,7 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    links?: LinkUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -9861,6 +10113,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    links?: LinkUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -9872,6 +10125,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    links?: LinkUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -9883,6 +10137,7 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
+    links?: LinkCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -9894,6 +10149,7 @@ export namespace Prisma {
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    links?: LinkUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -9921,6 +10177,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    links?: LinkUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -9932,6 +10189,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    links?: LinkUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type LinkCreateManyCategoryInput = {
@@ -9940,6 +10198,7 @@ export namespace Prisma {
     url: string
     note?: string | null
     createAt?: Date | string
+    userId: string
   }
 
   export type LinkUpdateWithoutCategoryInput = {
@@ -9948,6 +10207,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutLinksNestedInput
   }
 
   export type LinkUncheckedUpdateWithoutCategoryInput = {
@@ -9956,6 +10216,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type LinkUncheckedUpdateManyWithoutCategoryInput = {
@@ -9964,6 +10225,7 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     note?: NullableStringFieldUpdateOperationsInput | string | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SessionCreateManyUserInput = {
@@ -9989,6 +10251,15 @@ export namespace Prisma {
     password?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+  }
+
+  export type LinkCreateManyUserInput = {
+    id?: string
+    name?: string | null
+    url: string
+    note?: string | null
+    createAt?: Date | string
+    categoryId?: string | null
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -10064,6 +10335,33 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LinkUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneWithoutLinksNestedInput
+  }
+
+  export type LinkUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LinkUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

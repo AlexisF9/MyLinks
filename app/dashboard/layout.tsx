@@ -58,6 +58,7 @@ export default async function Layout({
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className="p-6">
+          <p>Hi {user.name} !</p>
           <form>
             <Button
               variant={"outline"}
